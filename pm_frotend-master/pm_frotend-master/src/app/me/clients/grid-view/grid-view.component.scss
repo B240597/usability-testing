@@ -1,0 +1,43 @@
+.maginlft1 {
+  margin-left: 10px;
+}
+
+.confirm-btn-container .btn {
+  width: 100px !important;
+  margin-left: 10px;
+}
+
+.onClick {
+  cursor: pointer !important;
+  color: cornflowerblue !important;
+}
+
+.tab2 {
+  border-radius: 4px;
+  background: #bfbfbf !important;
+  font-size: 15px;
+  cursor: pointer;
+  // width: 348px;
+  // margin-left: -24px;
+  // margin-left: -21px;
+}
+
+.tab2:hover {
+  color: #4d4444;
+  background: #cddee7 !important;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.24), 0 7px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+.newMarginClass {
+  margin-top: 7px !important;
+}
+
+.app.black-light .ngx-charts text {
+  fill: rgba(140, 140, 140, 1);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.cursor {
+  cursor: pointer;
+}

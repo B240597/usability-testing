@@ -1,0 +1,86 @@
+<div fxLayout="row wrap">
+    <div class="table-responsive flex-p">
+        <button type="button" class="btn btn-success" style="margin-bottom: 5px;margin-left: 5px;float: right" (click)="savePermissions()"><i class="fa fa-floppy-o"></i>Save</button>
+        <button type="button" class="btn btn-default" style="margin-bottom: 5px;float:right" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button>
+       
+        <table id="example2" class="table table-bordered table-hover" style="margin-bottom:30px">
+            
+            <thead class="tbl-head">
+                <tr class="tr-grid-header">
+                    <th style="width:36%!important">Special Permissions</th>
+                    <th style="width:16%!important" class="style">Approved</th>
+                    <th style="width:14%!important" class="style">Declined</th>
+                    <th style="width:18%!important" class="style">Items</th>
+                    <th class="style">Completed</th>
+                    <!--<th>Permissions</th>
+                        <th>Status</th>
+                        <th>Actions</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FAT</td>
+                        <td class="style"><input type="checkbox" checked></td>
+                        <td class="style"><input type="checkbox" checked></td>
+                        <td class="style"><input type="checkbox" checked></td>
+                        <td class="style">-</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>CAPA</td>
+                        <td class="style">-</td>
+                        <td class="style">-</td>
+                        <td class="style">-</td>
+                        <td class="style"><input type="checkbox" checked></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="example2" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                    <tr class="tr-grid-header">
+                        <th>Screen Permissions</th>
+                        <th class="style">Create</th>
+                        <th class="style">Read</th>
+                        <th class="style">Update</th>
+                        <th class="style">Delete</th>
+                        <!--<th>Permissions</th>
+                            <th>Status</th>
+                            <th>Actions</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let screenName of screens">
+                            <td>{{screenName.name}}</td>
+                            <td class="style"><input type="checkbox" checked></td>
+                            <td class="style"><input type="checkbox" checked></td>
+                            <td class="style"><input type="checkbox" checked></td>
+                            <td class="style"><input type="checkbox" checked></td>
+                            <!-- <td>{{applicant.vcEmail}}</td>
+                                <td>{{applicant.vcPhone}}</td>
+                                <td><a [routerLink]="permissions">{{applicant.Permissions}}</a></td>
+                                <td><a (click)="changeStatus($event,applicant.intApplicantId)">{{
+                                    applicant.vcStatus ? 'Active'
+                                    :'Inactive'}}
+                                </a></td>
+                                <td>
+                                    <a title="Edit User" style="margin-right: 10px; cursor: pointer;" (click)="openUserDialog(applicant.intApplicantId)">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a mwlConfirmationPopover
+                                    [popoverTitle]="popoverTitle"
+                                    [popoverMessage]="popoverMessage"
+                                    placement="left"
+                                    (confirm)="deleteUser(applicant.intApplicantId)"
+                                    (cancel)="cancelClicked = true">
+                                    <i style="cursor: pointer;" title="Delete User" class="fa fa-trash red"></i>
+                                </a>
+                                
+                            </td> -->
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>

@@ -1,0 +1,55 @@
+.user-menu .mat-toolbar,
+.user-menu .mat-toolbar-row {
+  height: 60px !important;
+}
+
+.user-menu .user-info {
+  width: 230px;
+}
+
+.user-menu .user-info p {
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+}
+
+.user-menu .mat-menu-item {
+  height: 36px;
+  line-height: 36px;
+}
+
+.input-icon.right > i {
+  right: 25px;
+  float: right;
+}
+
+.input-icon > i {
+  color: #ccc;
+  display: block;
+  position: absolute;
+  margin-top: 5px;
+  margin-bottom: 4px;
+  margin-left: 10px;
+  z-index: 3;
+  width: 16px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.fa {
+  display: inline-block;
+  font: 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.modal .input-icon > i {
+  z-index: 10055;
+}
+
+::ng-deep .new-class {
+  height: 60px !important;
+}
+/*# sourceMappingURL=universal-filter.component.css.map */

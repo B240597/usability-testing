@@ -1,0 +1,47 @@
+<h1 mat-dialog-title><span>Add</span> Update</h1>
+<div mat-dialog-content>
+  <form class="form-horizontal" >
+    <div class="form-group">
+        <!-- <label class="control-label col-sm-4">Content:</label> -->
+        <div class="col-sm-12">
+            <textarea rows="4" class="form-control txtarea" id="content" placeholder="Write here"></textarea>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+            <div class="col-lg-4">
+                    <select class='select-option form-control' required [(ngModel)]='modeOptionSelected' (ngModelChange)='onModeOptionsSelected($event)' name="communication">
+                            <option class='option' [ngValue]="undefined" selected disabled>-Type of Update-</option>
+                            <option class='option' *ngFor='let option of modeOptions' [value]="option">{{option}}</option>
+                     </select>
+            </div>
+            <div class="col-lg-4">
+                    <select class='select-option form-control' required [(ngModel)]='communicationOptionSelected' (ngModelChange)='onCommunicationOptionsSelected($event)' name="communication">
+                            <option class='option' [ngValue]="undefined" selected disabled>-Nature of Update-</option>
+                            <option class='option' *ngFor='let option of communicationOptions' [value]="option">{{option}}</option>
+                     </select>
+            </div>
+            
+            <div class="col-lg-4">
+                    <div class="input-icon right">
+                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt1"></i>
+                            <input class="form-control" placeholder="MM/DD/YYYY" class="form-control" id="dob" [(ngModel)]="dateTime1" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </div>
+        </div>
+        
+    </div> -->
+        <!-- <div class="form-group">
+        <label class="control-label col-sm-4">Name:</label>
+        <div class="col-sm-6">
+            <input type="email" class="form-control" id="email" placeholder="Enter notes name">
+        </div>
+    </div> -->
+    
+    
+</form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Cancel</button>
+  <button mat-raised-button class="add-hover btn-success" (click)="saveInfo()"><span>Save</span></button>
+</mat-dialog-actions>

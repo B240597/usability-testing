@@ -1,0 +1,135 @@
+<div class="row-wrap">
+  <div class="flex-p w-100">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="row" style="margin-bottom:7px;">
+          <div class="col-sm-4">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 " style="margin-top: 15px;" for="pwd">Select
+              Engineer:
+            </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+              <mat-select style="margin-top: 10px;" (ngModelChange)="selectEngineer()" [formControl]="engineer"
+                class="form-control" placeholder="Select Engineer">
+                <mat-option *ngFor="let item of engineerList" [value]="item.userId">
+                  {{item.userName}}</mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-xs-8 ">
+            <div class="flex-p">
+              <button mat-raised-button color="primary" class="pull-right filters-hover margin-right-10"
+                (click)="filterToggle = !filterToggle">
+                <mat-icon>filter_list</mat-icon> Filter
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+            <mat-card class="filter">
+              <mat-card-content>
+                <div class="row col-sm-12">
+
+                  <div class="col-sm-4">
+                    <div class="col-sm-4 newMarginClass">
+                      Keyword:
+                    </div>
+                    <div class="col-sm-8">
+                      <input type="text" [formControl]="keywordSearch" placeholder="Search by Keyword"
+                        class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="col-sm-4 newMarginClass">By Status:</div>
+                    <div class="col-sm-8">
+                      <mat-select class="form-control" [formControl]="approved" placeholder="Select by Status">
+                        <mat-option [value]="2">In Progress</mat-option>
+                        <mat-option [value]="3">Submitted</mat-option>
+                        <mat-option [value]="4">Done</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="col-lg-1" style="margin-top: -5px;">
+                      <button mat-raised-button (click)=" fliterSearch()" class="pull-right btn-primary">
+                        <mat-icon>youtube_searched_for</mat-icon> Search
+                      </button>
+
+                    </div>
+                    <div class="col-lg-1">
+                      <button mat-raised-button (click)="clearFilters()"
+                        style="background-color:#37474f; color:#fff !important;margin-top: -5px">
+                        <mat-icon>settings_backup_restore</mat-icon> Clear
+                      </button>
+
+                    </div>
+                    <a (click)="filterToggle = !filterToggle" class="pull-right"
+                      style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                      <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                    </a>
+
+
+                  </div>
+
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:20px">
+          <div class="col-xs-12">
+            <div id="divQuotesGrid" class="table-responsive">
+              <table matSort id="example2" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                  <tr>
+                    <th>Project #</th>
+                    <th>Job #</th>
+                    <th>Description</th>
+                    <th>Project Manager</th>
+                    <th class="text-center">Start Date</th>
+                    <th class="text-center">Target Date</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Approved Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center" *ngIf="showEmpty">
+                    <td class="text-center" colspan="8">No Data Found</td>
+                  </tr>
+                  <tr *ngFor="let item of jobList">
+                    <td>{{item.projectCode}}</td>
+                    <td>{{item.jobCode}}</td>
+                    <td>{{item.jobDescribtion}}</td>
+                    <td>{{item.projectManagerName}}</td>
+                    <td style="text-align: center!important;">{{item.startDate | date}}</td>
+                    <td style="text-align: center!important;">{{item.targetDate | date}}</td>
+                    <td
+                      [ngStyle]="{'color': item.status==1? 'black': item.status==2?'blue' :item.status==3? 'red' : 'Green'}"
+                      style="text-align: center !important;">
+                      {{item.status==1? 'To Do': item.status==2?'In Process' :item.status==3?
+                      'Submitted' :
+                      'Done' }}
+                    </td>
+                    <td style="text-align: center!important;">{{item.completionDate ? (item.completionDate | date) :
+                      '-'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage"
+                [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

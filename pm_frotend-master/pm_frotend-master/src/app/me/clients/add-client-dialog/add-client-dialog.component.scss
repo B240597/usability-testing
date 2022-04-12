@@ -1,0 +1,57 @@
+.user-form{
+    .form-field-outer{
+        width: 280px;
+    }
+    .mat-radio-button{
+        margin-right: 12px;
+    }
+}
+.mat-radio-label-content {
+    display: inline-block;
+    order: 0;
+    line-height: inherit;
+    padding-left: 8px;
+    padding-right: 0;
+    padding-top: 5px;
+}
+.disable-custom-drp {
+    pointer-events: none !important;
+    filter: grayscale(1) !important;
+    background-color: #80808036 !important;
+    cursor: not-allowed !important;
+}
+.cursor-notallowed{
+    cursor: not-allowed;
+}
+input[type=file] {
+    padding: 2px 3px;
+}
+.add {
+    color:#337ab7;
+}
+.delete {
+    color:red;
+}
+.padding-left-23{
+    padding-left: 23px;
+}
+.input-icon.right>i {
+    right:25px;
+    float: right;
+    
+
+}
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}

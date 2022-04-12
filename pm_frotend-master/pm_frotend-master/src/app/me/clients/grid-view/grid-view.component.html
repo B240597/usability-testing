@@ -1,0 +1,304 @@
+<div class="row-wrap">
+    <div class="flex-p w-100">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="row" style="margin-bottom:7px;">
+                    <div class="col-sm-3">
+                        <div *ngIf="userType == 'admin' || userType =='project_manager' ">
+                            <label class="control-label col-lg-5 col-md-5 col-sm-5 col-xs-5 " style="margin-top: 15px;"
+                                for="pwd">Select Project:
+                            </label>
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <mat-select class="form-control" [formControl]="selectProject"
+                                    (ngModelChange)="getProjectDueDate(selectProject.value);" style="margin-top: 10px;"
+                                    placeholder="Select Project">
+                                    <mat-option *ngFor="let item of projectList" [value]="item.projectId">
+                                        {{item.projectCode}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div *ngIf="selectProject.value && (userType == 'admin' || userType =='project_manager' )">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 " style="margin-top: 15px;"
+                                for="pwd">Due Date:
+                            </label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"
+                                style="font-size: 22px;font-family: 'FontAwesome';margin-top: 9px;font-weight: 600;">
+                                {{dueDate | date}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="flex-p">
+
+                            <button mat-raised-button class="pull-right  btn-primary margin-right-10"
+                                (click)="openGridColumn(gridColumns)">
+                                <mat-icon>grid_on</mat-icon> Grid Columns
+                            </button>
+                            <button mat-raised-button color="primary" class="pull-right filters-hover margin-right-10"
+                                (click)="filterToggle = !filterToggle">
+                                <mat-icon>filter_list</mat-icon> Filter
+                            </button>
+                            <button *ngIf="userType== 'admin' && selectProject.value" mat-raised-button
+                                title="Upload excel to add Job" class=" pull-right add-hover  btn-success "
+                                style="margin-right: 10px;" (click)="uploadExcel()">
+                                <mat-icon>import_export</mat-icon>
+                                Upload Excel
+                            </button>
+                            <button *ngIf="userType== 'admin'" mat-raised-button color="primary"
+                                (click)="dowloadBulkUploadDataTemplate()" title="Click To Dowload Template"
+                                class="pull-right" style="margin-right: 10px;">
+                                <mat-icon>import_export</mat-icon>
+                                Download Sample
+                            </button>
+                            <div *ngIf="userType == 'admin' || userType =='project_manager' " class=" pull-right"
+                                style="margin-right: 15px;margin-top: 12px;">
+                                <mat-checkbox [checked]="isArchived" (change)="checkArchive($event.checked)">
+                                </mat-checkbox>
+                                &nbsp;<span style="color: black">Show Archived</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div fxLayout="row wrap">
+                    <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+                        <mat-card class="filter">
+                            <mat-card-content>
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Job#:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" [formControl]="jobCode" placeholder="Search by Job#"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" *ngIf="userType == 'admin' || userType =='project_manager' ">
+                                        <div class="col-sm-4 newMarginClass">By Engineer:</div>
+                                        <div class="col-sm-8">
+                                            <mat-select [formControl]="engineer" class="form-control"
+                                                placeholder="Select Engineer">
+                                                <mat-option *ngFor="let item of engineerList" [value]="item.userId">
+                                                    {{item.userName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="userType == 'admin' " class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">By Project Manager:</div>
+                                        <div class="col-sm-8">
+                                            <mat-select [formControl]="projectManager" class="form-control"
+                                                placeholder="Select Project Manager">
+                                                <mat-option *ngFor="let item of projectManagerList"
+                                                    [value]="item.userId">{{item.userName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row col-sm-12" style="margin-top:20px">
+
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">By Target Date:</div>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" readonly="true" [formControl]="targetDate"
+                                                placeholder="MM/DD/YYYY" class="form-control" 
+                                                [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2">
+                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">By Completion Date:</div>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" readonly="true" [formControl]="completionDate"
+                                                placeholder="MM/DD/YYYY" class="form-control" 
+                                                [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">By Status:</div>
+                                        <div class="col-sm-8">
+
+                                            <mat-select class="form-control" [formControl]="status"
+                                                placeholder="Select by Status">
+                                                <mat-option [value]="2">In Progress</mat-option>
+                                                <mat-option [value]="3">Submitted</mat-option>
+                                            </mat-select>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row col-sm-12" style="margin-top:20px">
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">By Review Date:</div>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" readonly="true" [formControl]="ReviewDate"
+                                                placeholder="MM/DD/YYYY" class="form-control" id="db"
+                                                [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dt3">
+                                            <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-2">
+                                        <div class="col-lg-1">
+                                            <button mat-raised-button class="pull-right btn-primary"
+                                                (click)="fliterSearch()">
+                                                <mat-icon>youtube_searched_for</mat-icon> Search
+                                            </button>
+
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button mat-raised-button (click)="clearFilters()"
+                                                style="background-color:#37474f; color:#fff !important;">
+                                                <mat-icon>settings_backup_restore</mat-icon> Clear
+                                            </button>
+
+                                        </div>
+                                        <a (click)="filterToggle = !filterToggle" class="pull-right"
+                                            style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                                            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                        </a>
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row col-sm-12" style="margin-top:20px">
+
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px">
+                    <div class="col-xs-12">
+                        <div id="divQuotesGrid" class="table-responsive">
+                            <table matSort id="example2" class="table table-bordered table-hover">
+                                <thead class="tbl-head">
+                                    <tr>
+                                        <!-- <th>Project #</th> -->
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">Job #</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">Description</th>
+                                        <th
+                                            *ngIf="gridColumns[0].grid_columns.split('')[2] == '1' && (userType == 'admin' || userType =='project_manager') ">
+                                            Engineer</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">Project Manager</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'" class="text-center">
+                                            Work Duration in Days</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'" class="text-center">
+                                            Target Date</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'" class="text-center">
+                                            Remarks</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'" class="text-center">
+                                            Review Date</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'" class="text-center">
+                                            Issues</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'" class="text-center">
+                                            Status</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[10] == '1' && isArchived "
+                                            class="text-center">
+                                            Completion Date</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[11] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            class="text-center">Approve</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[12] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            class="text-center">Decline</th>
+                                        <th *ngIf=" gridColumns[0].grid_columns.split('')[13] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            class="text-center" style="width: 112px!important;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center" *ngIf="showEmpty">
+                                        <td class="text-center" colspan="13">No Data Found</td>
+                                    </tr>
+                                    <tr *ngFor="let item of jobList">
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">{{item.jobCode}}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">
+                                            {{item.jobDescribtion}}</td>
+                                        <td
+                                            *ngIf="gridColumns[0].grid_columns.split('')[2] == '1' && (userType == 'admin' || userType =='project_manager') ">
+                                            {{item.engineerName}}</td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">
+                                            {{item.projectManagerName}}</td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'"
+                                            style="text-align: center!important;">{{item.workDuration}}</td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'"
+                                            style="text-align: center!important;">{{item.targetDate | date}}</td>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'" class="text-center">
+                                            {{item.remark? item.remark : '-' }}</th>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'"
+                                            class="onClick text-center" (click)="openReviewsDilog(item.jobId)">
+                                            {{item.reviewDate ? (item.reviewDate | date): '-'}}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'"
+                                            class="onClick text-center" (click)="openIssuesDilog(item)">
+                                            {{item.issues}}
+                                        </td>
+                                        <td class="cursor" *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'"
+                                            (click)="openStatusDialog(item,item.status)"
+                                            [ngStyle]="{'color': item.status==1? 'black': item.status==2?'blue' :item.status==3? 'red' : 'Green'}"
+                                            style="text-align: center !important;">
+                                            {{item.status==1? 'To Do': item.status==2?'In Process' :item.status==3?
+                                            'Submitted' :
+                                            'Done' }}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[10] == '1' && isArchived "
+                                            style="text-align: center!important;">{{item.completionDate ?
+                                            (item.completionDate | date): '-'}}</td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[11] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            style="text-align: center!important;">
+                                            <mat-checkbox *ngIf="item.status!=3" [disabled]="1"
+                                                [checked]="item.approveStatus"></mat-checkbox>
+                                            <mat-checkbox *ngIf="item.status==3" mwlConfirmationPopover
+                                                [popoverTitle]="'Approve'"
+                                                [popoverMessage]="'The task will be approved and it is moved to archived'"
+                                                placement="left" (confirm)="approveJob(item,!item.approveStatus)"
+                                                (cancel)="cancelClicked1 = true;refresh()" [checked]="item.approveStatus">
+                                            </mat-checkbox>
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[12] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            style="text-align: center!important;">
+                                            <mat-checkbox *ngIf="item.status!=3" [disabled]="1"
+                                                [checked]="item.declineStatus">
+                                            </mat-checkbox>
+                                            <mat-checkbox *ngIf="item.status==3" mwlConfirmationPopover
+                                                [popoverTitle]="'Decline'"
+                                                [popoverMessage]="'The task will be declined and it will be reassigned to respective engineer'"
+                                                placement="left" (confirm)="declineJob(item,!item.declineStatus)"
+                                                (cancel)="cancelClicked1 = true;refresh()" [checked]="item.declineStatus">
+                                            </mat-checkbox>
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[13] == '1' && (userType == 'admin' || userType =='project_manager') "
+                                            class="text-center">
+                                            <a (click)="openDeleteDialog(item)"><i class="fa fa-trash red"
+                                                    matTooltip="Delete Job" style="cursor: pointer;"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage"
+                                [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                        <div *ngIf="!jobList" fxLayout="column" fxLayoutAlign="center center" class="campaign-spinner">
+                            <mat-spinner color="primary"></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

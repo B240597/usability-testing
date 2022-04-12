@@ -1,0 +1,28 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title>
+      <span class="title-left">Add Item</span>
+    </h1>
+  </div>
+  
+  <div mat-dialog-content>
+    <form class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Item Name:&nbsp;</label>
+            <div class="col-sm-8">
+               <input type="text" maxlength="50" class="form-control" placeholder="Enter Item Name">
+            </div>
+          </div>
+     
+    </form>
+  </div>
+  
+  <mat-dialog-actions class="col-sm-12" align="end">
+    <button mat-raised-button class="btn-primary" (click)="close()">
+      <mat-icon>send</mat-icon>&nbsp;Save
+    </button>
+    <button mat-raised-button class="CancelClass" (click)="close()">
+      <mat-icon>cancel</mat-icon>&nbsp;Close
+    </button>
+  </mat-dialog-actions>
+
+

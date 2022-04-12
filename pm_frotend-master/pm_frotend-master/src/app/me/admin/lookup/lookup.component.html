@@ -1,0 +1,77 @@
+<!--This page is used to manage lookups-->
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button *ngIf="userType == 'admin'" mat-raised-button class="add-hover pull-right"
+                        style="background:#229494;color: white;" (click)="updateLookupDialog(null)">
+                        <mat-icon>add</mat-icon>&nbsp;Add
+                        Lookup
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover table-striped">
+                <thead class="tbl-head">
+                    <tr class="tr-grid-header">
+                        <th>Code</th>
+                        <th>Lookups</th>
+                        <th>Status</th>
+                        <th *ngIf="userType == 'admin'">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="showEmpty">
+                        <td colspan="4">No records found</td>
+                    </tr>
+                    <tr *ngFor="let item of tableList">
+                        <td>{{item.code_name}}</td>
+                        <td>{{item.lookup_name}}</td>
+                        <td *ngIf="userType != 'admin'" [ngClass]="item.is_active ? '' : 'status Red'">
+                            {{item.is_active?'Active':'Inactive'}}</td>
+                        <td *ngIf="userType == 'admin'">
+                            <a [ngClass]="item.is_active ? 'status' : 'status Red'" mwlConfirmationPopover
+                                [popoverTitle]="popoverStatusTitle" [popoverMessage]="popoverStatusMessage"
+                                placement="left" (confirm)="updateLookup(item.lookup_id, !item.is_active, 'status');"
+                                (cancel)="cancelClicked = true">
+                                {{item.is_active?'Active':'Inactive'}}
+                            </a>
+                        </td>
+                        <td *ngIf="userType == 'admin'">
+                            <a *ngIf="userType == 'admin' " (click)="updateLookupDialog(item)"
+                                style="margin-right: 10px; cursor: pointer;">
+                                <i title="Edit Lookup" class="fa fa-edit"></i>
+                            </a>
+
+                            <!-- <i *ngIf="item.lookup_id <= 4" title="Edit Lookup" class="fa fa-edit fa-disabled"
+                                style="margin-right: 10px;"></i>
+
+                            <i *ngIf="item.lookup_id <= 4" title="Delete Lookup"
+                                class="fa fa-trash red fa-disabled"></i> -->
+
+                            <a *ngIf="userType == 'admin'" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                                [popoverMessage]="popoverMessage" placement="left"
+                                (confirm)="updateLookup(item.lookup_id, !item.is_deleted, 'delete')"
+                                (cancel)="cancelClicked = true">
+                                <i style="cursor: pointer;" title="Delete Lookup" class="fa fa-trash red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </div>
+
+</div>

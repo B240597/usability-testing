@@ -1,0 +1,14 @@
+<h4 mat-dialog-title>Confirm {{action.action | titlecase }}</h4>
+<div style="margin-top: 20px;" *ngIf="action.action === 'delete'" mat-dialog-content>
+  Are you sure you want to {{action.action}} this {{action.name}} ?
+</div>
+<div style="margin-top: 20px;" *ngIf="action.action === 'status'" mat-dialog-content>
+  Are you sure you want change this {{action.name}} status to {{action.value ? 'Inactive' : 'Active'}} ?
+</div>
+<div style="margin-top: 20px;" *ngIf="action.action === 'convert'" mat-dialog-content>
+  Are you sure you want to convert this {{action.name}} to prospect ?
+</div>
+<div style="margin-top: 20px;" mat-dialog-actions align="end">
+  <button mat-raised-button class="add-dark-hover btn-default" [mat-dialog-close]="'false'" (click)="close()">Cancel</button>
+  <button mat-raised-button class="add-hover btn-success" [mat-dialog-close]="'true'" (click)="saveInfo()" >Confirm</button>
+</div>

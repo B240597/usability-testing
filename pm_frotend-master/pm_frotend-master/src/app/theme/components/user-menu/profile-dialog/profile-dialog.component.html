@@ -1,0 +1,38 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title>Profile</h1>
+</div>
+<div mat-dialog-content>
+    
+    <form class="form-horizontal" novalidate [formGroup]="userProfileForm">
+        <div class="form-group">
+            <label class="control-label col-sm-4">User Name : </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <i class="fa fa-user"></i>
+                    <input type="text" style="cursor:not-allowed" formControlName="userName" class="form-control" id="name" placeholder="Enter First Name" readonly>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Email : </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <i class="fa fa-user"></i>
+                    <input type="text" style="cursor:not-allowed" class="form-control" id="lname" formControlName="uniqueId" readonly>
+                </div>
+            </div>
+        </div> -->
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Role : </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <i class="fa fa-user"></i>
+                    <input type="text" style="cursor:not-allowed" class="form-control" id="dname" formControlName="role" readonly>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>close</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions> 

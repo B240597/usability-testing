@@ -1,0 +1,217 @@
+<div class="row-wrap">
+    <div class="flex-p w-100">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" style="margin-bottom:7px;">
+                    <div class="col-xs-6 ">
+                    </div>
+                    <div class="col-xs-6 ">
+                        <div class="flex-p">
+                            <button *ngIf="userType == 'admin' " mat-raised-button class="pull-right  btn-primary"
+                                (click)="openProjectDialog(null)">
+                                <mat-icon>add</mat-icon> Add Project
+                            </button>
+                            <button mat-raised-button class="pull-right  btn-primary margin-right-10"
+                                (click)="openGridColumns(gridColumns)">
+                                <mat-icon>grid_on</mat-icon> Grid Columns
+                            </button>
+                            <button mat-raised-button color="primary" class="pull-right filters-hover margin-right-10"
+                                (click)="filterToggle = !filterToggle">
+                                <mat-icon>filter_list</mat-icon> Filter
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div fxLayout="row wrap" *ngIf="filterToggle">
+                    <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+                        <mat-card class="filter">
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Project#:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" [formControl]="projectCode"
+                                                placeholder="Search by Project#" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div *ngIf=" userType =='admin' " class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Project Manager:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <mat-select [formControl]="projectManager" class="form-control"
+                                                placeholder="Select Project Manager">
+                                                <mat-option *ngFor="let item of projectManagerList"
+                                                    [value]="item.userId">{{item.userName}}</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Start Date:
+                                        </div>
+                                        <div class="col-sm-8">
+
+                                            <input [formControl]="startDate" readonly="true" class="form-control"
+                                                placeholder="MM/DD/YYYY" class="form-control" id="db"
+                                                [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" style="margin-top: 20px;">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Delivery Date:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <input [formControl]="DeliveryDate" readonly="true" class="form-control"
+                                                placeholder="MM/DD/YYYY" class="form-control" id="db"
+                                                [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2">
+                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" style="margin-top: 20px;">
+                                        <div class="col-sm-4 newMarginClass">
+                                            By Status:
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <mat-select [formControl]="projectStatus" class="form-control"
+                                                placeholder="Search by Status">
+                                                <mat-option value="1">Active</mat-option>
+                                                <mat-option value="2">On Hold</mat-option>
+                                                <mat-option value="3">Inactive</mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1" style="margin-top: 20px;margin-left:195px!important;">
+                                        <button mat-raised-button class="pull-right btn-primary"
+                                            (click)="fliterSearch()">
+                                            <mat-icon>youtube_searched_for</mat-icon> Search
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                                        style="margin-top: 20px;margin-left: -18px;">
+                                        <button mat-raised-button
+                                            style="background-color:#37474f; color:#fff !important"
+                                            (click)="clearFilters()">
+                                            <mat-icon>settings_backup_restore</mat-icon> Clear
+                                        </button>
+                                    </div>
+                                    <a (click)="filterToggle = !filterToggle" class="pull-right"
+                                        style="margin-top: 20px;font-size: 25px; cursor: pointer; margin-left: 5px;">
+                                        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                    </a>
+
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px">
+                    <div class="col-xs-12">
+                        <div id="grid-table-container" class="table-responsive">
+                            <table matSort id="example2" class="table table-bordered table-hover">
+                                <thead class="tbl-head">
+                                    <tr>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'"
+                                            style="min-width:80px">Project #</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">Project Name</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">Client Name</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">Project Type</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">Location</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">Project Manager</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'" class="text-center">
+                                            Jobs</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'" class="text-center"
+                                            style="min-width:100px">Start Date</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'" class="text-center"
+                                            style="min-width:100px">Delivery Date</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'" class="text-center">
+                                            Status</th>
+                                        <th *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'" class="text-center"
+                                            style="width: 112px!important;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center" *ngIf="showEmpty">
+                                        <td class="text-center" colspan="11">No Data Found</td>
+                                    </tr>
+                                    <tr *ngFor="let item of projectList">
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'"
+                                            style="min-width: 70px !important;">
+                                            {{item.projectCode}}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">
+                                            {{item.projectName}}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">
+                                            {{item.clientName}}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">
+                                            {{item.projectType}}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">
+                                            {{item.clientLocation}}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">
+                                            {{item.projectManagerName}}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'" class="text-center">
+                                            <a style="color:blue;text-decoration:underline"
+                                                (click)="openJob(item.projectId)" target="_blank"
+                                                routerLink="/admin/jobs">{{item.jobs}}</a>
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'" class="text-center">
+                                            {{item.startDate | date }}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'" class="text-center">
+                                            {{item.deliveryDate | date }}
+
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'"
+                                            [ngStyle]="{'color': item.status==1? 'blue' :item.status==2? 'Green' : 'red'}"
+                                            style="text-align: center !important;cursor: pointer;"
+                                            (click)="openStatusDialog(item,item.status)">
+                                            {{item.status == 1 ? 'Active': item.status==2 ? 'On Hold':'Inactive' }}
+                                        </td>
+                                        <td *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'"
+                                            class="text-center">
+                                            <a style="cursor: pointer;margin-right:10px; "
+                                                (click)="openProjectDialog(item)" matTooltip="Update Project">
+                                                <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                                            </a>
+                                            <a *ngIf="item.jobs == '0/0'" (click)="openDeleteDialog(item)">
+                                                <i class="fa fa-trash red" matTooltip="Delete Project"
+                                                    style="cursor: pointer;"></i>
+                                            </a>
+                                            <a *ngIf="item.jobs != '0/0'">
+                                                <i class="fa fa-trash " style="cursor: pointer;"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage"
+                                [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

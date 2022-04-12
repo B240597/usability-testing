@@ -1,0 +1,57 @@
+<button mat-icon-button [matMenuTriggerFor]="userMenu" #userMenuTrigger="matMenuTrigger">
+  <!-- <mat-icon title="Universal Filter">search</mat-icon> -->
+  <i class="fa fa-filter" aria-hidden="true" style="font-size: 20px;"></i>
+</button>
+
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">
+  <!--<span (mouseleave)="userMenuTrigger.closeMenu()">-->
+  <mat-toolbar color="primary" class="new-class" style="height:60px!important;background:white!important">
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info">
+      <button type="button" class="btn btn-primary btn-xs" style="font-size: 10px !important;">Today</button>
+      <button type="button" class="btn btn-primary btn-xs" style="font-size: 10px !important;">Week</button>
+      <button type="button" class="btn btn-primary btn-xs" style="font-size: 10px !important;">Month</button>
+      <button type="button" class="btn btn-primary btn-xs" style="font-size: 10px !important;">Quarter</button>
+      <button type="button" class="btn btn-primary btn-xs" style="font-size: 10px !important;">Year</button>
+    </div>
+  </mat-toolbar>
+  <!-- <a mat-menu-item (click)="openUserDialogs(null)"> 
+      <mat-icon>person</mat-icon>
+      <span>Profile</span> 
+    </a>
+    <a mat-menu-item (click)="openUserDialog(null)"> 
+      <mat-icon>vpn_key</mat-icon>
+      <span>Change Password</span> 
+    </a> -->
+  <!-- <a mat-menu-item routerLink="/"> 
+      <mat-icon>lock</mat-icon>
+      <span>Lock screen</span> 
+    </a>
+    <a mat-menu-item routerLink="help"> 
+      <mat-icon>help</mat-icon>
+      <span>Help</span> 
+    </a> -->
+  <!-- <div class="divider"></div>  -->
+  <div class="input-icon right" mat-menu-item>
+    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt1"></i>
+    <input class="form-control" placeholder="Select Date" class="form-control" id="db" [owlDateTimeTrigger]="dt1"
+      [owlDateTime]="dt1" name="dt1" required>
+    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+  </div>
+  <a mat-menu-item>
+    <!-- <mat-icon>power_settings_new</mat-icon> -->
+    <mat-select placeholder="--Select Location--" class="form-control" (click)="$event.stopPropagation()">
+      <mat-option *ngFor="let option of origins" [value]="option.id">{{option.value}}</mat-option>
+    </mat-select>
+    <!-- <span>Select Zone</span>  -->
+  </a>
+  <a mat-menu-item>
+    <!-- <mat-icon>power_settings_new</mat-icon> -->
+    <mat-select placeholder="--Select Customer--" class="form-control" (click)="$event.stopPropagation()">
+      <mat-option *ngFor="let option of customers" [value]="option.id">{{option.value}}</mat-option>
+    </mat-select>
+    <!-- <span>Select Zone</span>  -->
+  </a>
+  <!--</span>-->
+  <button type="button" class="btn btn-success btn-xs"
+    style="font-size: 10px !important;float: right;margin: 5px;">Apply</button>
+</mat-menu>

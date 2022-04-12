@@ -1,0 +1,27 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title>Grid View Configuration </h1>
+</div>
+<p>Please select the required columns in the grid, to view grid with specific columns</p>
+<div mat-dialog-content style="overflow:hidden!important;">
+  <form class="form-horizontal" novalidate [formGroup]="gridColumnForm" style="margin-top:10px">
+    <mat-checkbox class="col-sm-4" formControlName="job">Job #</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="description">Description</mat-checkbox>
+    <mat-checkbox *ngIf="userType == 'admin' || userType =='project_manager'" class="col-sm-4" formControlName="engineer">Engineer</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="projectManager">Project Manager</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="work">Work Duration in Days</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="target">Target Date</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="remark">Remarks</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="review">Review Date</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="issue">Issues</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="status">Status</mat-checkbox>
+    <!-- <mat-checkbox class="col-sm-4" formControlName="completed">Completion Date</mat-checkbox> -->
+    <mat-checkbox *ngIf="userType == 'admin' || userType =='project_manager'" class="col-sm-4" formControlName="approve">Approval</mat-checkbox>
+    <mat-checkbox *ngIf="userType == 'admin' || userType =='project_manager'" class="col-sm-4" formControlName="decline">Decline</mat-checkbox>
+    <mat-checkbox *ngIf="userType == 'admin' || userType =='project_manager'" class="col-sm-4" formControlName="action">Actions</mat-checkbox>
+  </form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button class="btn-primary" (click)="saveGridColumns()">Configure</button>
+  <button mat-raised-button class="CancelClass" (click)="close()">Cancel</button>
+</mat-dialog-actions>

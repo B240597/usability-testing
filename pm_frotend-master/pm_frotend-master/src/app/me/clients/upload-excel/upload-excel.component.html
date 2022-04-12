@@ -1,0 +1,47 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title>
+    Upload Jobs
+  </h1>
+</div>
+
+<div mat-dialog-content style="margin: -15px;margin-top: 10px !important;height: 100px;">
+  <div class="form-group" style="margin-right: -8px; margin-left: -8px !important;">
+    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Upload Excel: </label>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <!-- <input  class="file" type="file" name="file" (change)="handleFileSelect($event)"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> -->
+      <input style="cursor: pointer !important" type="file"  (change)="handleFileSelect($event)"
+        placeholder="Upload file"
+        accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </div>
+  </div>
+</div>
+<div *ngIf="errorRecord.length > 0" class="row" style="margin-top:20px">
+  <div class="col-xs-12">
+    <div id="divQuotesGrid" class="table-responsive">
+      <table matSort id="example2" class="table table-bordered table-hover">
+        <thead class="tbl-head">
+          <tr>
+            <th class="text-center">Error List</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of errorRecord">
+            <td>{{item}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
+
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button [ngClass]="!checked ? '' : 'btn-success'" [disabled]="!checked"
+    (click)="upload()">Upload</button>
+  <button mat-raised-button class="CancelClass" (click)="close()">
+    Close
+  </button>
+</mat-dialog-actions>

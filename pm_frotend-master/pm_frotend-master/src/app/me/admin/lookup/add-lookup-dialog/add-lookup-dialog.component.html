@@ -1,0 +1,44 @@
+<!--This page is used to add or edit a lookup-->
+<h1 mat-dialog-title> {{ lookupObj ? "Update Lookup": "Add Lookup"   }} </h1><hr>
+<div mat-dialog-content>
+
+    <form class="form-horizontal" novalidate [formGroup]="addLookUpForm">
+        <div class="form-group">
+            <label class="control-label col-sm-3 add-member-label" for="code">Code Master: </label>
+            <div class="col-sm-8">
+                <select class="form-control" onDrag="return false" onDrop="return false" formControlName="code" id="code" required>
+                    <option value="" selected>--Select Code--</option>
+                    <option *ngFor="let code of codeTypes" [value]="code.id">{{ code.title }} </option>
+                </select>
+                <div *ngIf="!code.valid && (code.dirty || code.touched)" class="error-text">
+                        Code master is required.
+                </div>
+            </div>
+        </div>
+
+        <div formArrayName="addLookUpName">
+            <div *ngFor="let prop of addLookUpForm.get('addLookUpName')['controls']; let i = index">
+                <div class="row" style="margin-bottom: 12px;">
+                    <label *ngIf = "i == 0" class="control-label col-sm-3 add-member-label">Lookup Name: </label>
+                    <label *ngIf = "i > 0" class="control-label col-sm-3"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [formControlName]='i' [maxlength]="40" placeholder="Enter Lookup name" type="text" required>
+                        <div *ngIf="!addLookUpName.controls[i].valid && (addLookUpName.controls[i].dirty || addLookUpName.controls[i].touched)" class="error-text">
+                                Lookup name is required.
+                        </div>
+                    </div>
+                    <div *ngIf = "i == 0 && !lookupObj" class="col-sm-1" style="margin-top: 5px;">
+                        <a (click)="checkAddRow()"><i class="fa fa-plus pull-right"></i></a>
+                    </div>
+                    <div *ngIf = "i > 0 && !lookupObj" class="col-sm-1" style="margin-top: 5px;">
+                        <a (click)="removeObject(i)"><i class="fa fa-trash red pull-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-raised-button [disabled]="!addLookUpForm.valid" [ngClass]="!addLookUpForm.valid ? '': 'btn-success'  " (click)="saveLookups()">{{ lookupObj ? "Update": "Save"   }}</button>
+    <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Cancel</button>
+</mat-dialog-actions> 

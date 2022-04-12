@@ -1,0 +1,40 @@
+<button mat-icon-button [matMenuTriggerFor]="messagesMenu" (click)="openMessagesMenu()">
+    <mat-icon matBadgeColor="warn" [matBadge]="badgeCounter" [matBadgeHidden]="hideMatBadge" matBadgeSize="small">
+        notifications
+    </mat-icon>
+</button>
+
+<mat-menu #messagesMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu messages">
+    <mat-tab-group style="background:rgb(107,139,191);" (click)="stopClickPropagate($event)"
+        [selectedIndex]="selectedTab">
+        <mat-tab>
+            <ng-template style="color: white !important;" mat-tab-label>
+                Alerts
+            </ng-template>
+            <mat-card class="content" perfectScrollbar style="overflow-x: hidden !important;">
+                <div *ngIf="noteCount" fxLayout="column" fxLayoutAlign="none">
+                    <div class="mat-button row" *ngFor="let item of notifications">
+                        <div fxLayout="column" fxLayoutAlign="center center" class="col-sm-2 row-1">
+                            <span class="name">{{item.date}}</span>
+                            <span class="name">{{item.month}}</span>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 4px;" class="col-sm-9" [ngClass]="item.read ? 'messages-unread':''"
+                            (click)="notification(item)">
+                            <span class="name">{{item ? (item.title) : ''}}</span>
+                            <span class="text muted-text">{{item ? (item.message ) : ''}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="noteCount == 0" fxLayout="column" fxLayoutAlign="none">
+                    <button mat-button>
+                        <div fxLayout="column" style="width: 230px;height: 64px" fxLayoutAlign="center center">
+                            <label>No message Found</label>
+                        </div>
+                    </button>
+                </div>
+
+
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+</mat-menu>

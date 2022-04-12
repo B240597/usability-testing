@@ -1,0 +1,69 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title>
+    Review
+  </h1>
+</div>
+<div mat-dialog-content>
+  <form *ngIf=" userType == 'project_manager'|| userType == 'admin' " class="col-xs-12 form-horizontal">
+    <div *ngIf="!remark" class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Next Review Date:
+      </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input class="form-control" readonly="true" [formControl]="nextReviewDate" placeholder="MM/DD/YYYY" class="form-control" id="db"
+          [owlDateTimeTrigger]="dt1" [min]="today" [owlDateTime]="dt1" name="dt1">
+        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+      </div>
+    </div>
+    <div *ngIf="remark" class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Remarks :
+      </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input type="text" [formControl]="remarkData" class="form-control" placeholder="Enter Remarks ">
+      </div>
+    </div>
+  </form>
+  <div *ngIf=" userType =='project_manager'  || userType == 'admin'" class="col-xs-12">
+    <button *ngIf="!remark" [disabled]="!nextReviewDate.value"
+      [ngClass]=" !nextReviewDate.value ? 'pull-right':'pull-right btn-primary' " (click)="saveUser()"
+      mat-raised-button>
+      <span>Save</span></button>
+    <button *ngIf="remark" (click)="update()" mat-raised-button class="pull-right btn-primary">
+      <span>Update</span></button>
+  </div>
+  <div class="col-xs-12" style="margin-top: 10px;">
+    <div id="divQuotesGrid" class="table-responsive">
+      <table matSort id="example2" class="table table-bordered table-hover">
+        <thead class="tbl-head">
+          <tr>
+            <th class="text-center">Review Date </th>
+            <th class="text-center">Remark </th>
+            <th class="text-center">Reviewed By</th>
+            <th *ngIf=" userType =='project_manager' || userType == 'admin' " class="text-center">Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="showEmpty">
+            <td colspan="4" class="text-center">No Data Found</td>
+          </tr>
+          <tr *ngFor="let item of reviewList">
+            <td class="text-center">{{item.reviewDate | date}}</td>
+            <td class="text-center">{{item.remark ? item.remark:'-' }}</td>
+            <td class="text-center">{{item.projectManager? item.projectManager:'-'}}</td>
+            <td *ngIf="userType =='project_manager' || userType == 'admin' " class="text-center">
+              <a style="cursor: pointer;margin-right:10px; " matTooltip="Update Project"
+                (click)="changeRemark(item.reviewDateId)">
+                <i class="fa fa-edit" style="color: cornflowerblue"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage" [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

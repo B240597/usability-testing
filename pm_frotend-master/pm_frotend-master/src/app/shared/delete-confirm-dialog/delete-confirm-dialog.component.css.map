@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,MAAM;EAClB,WAAW,EAAE,KAAK;EAClB,UAAU,EAAE,KAAK;EACjB,YAAY,EAAE,KAAK;EACnB,OAAO,EAAE,GAAG;EACZ,aAAa,EAAE,IAAI;CACtB",
+    "sources": [
+        "delete-confirm-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "delete-confirm-dialog.component.css"
+}

@@ -1,0 +1,87 @@
+<div fxLayout="row wrap" #resizedDiv>
+  <div class="flex-p w-100">
+    <div class="row wrap" style="margin-bottom:7px;">
+      <div class="col-sm-4">
+        <div class="pills w-100 flex-p">
+          <!-- <ul class="nav nav-pills">
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/industry']"><mat-icon>highlight</mat-icon> Industries</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/location']"><mat-icon>outlined_flag</mat-icon> Countries</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/fat']"><mat-icon>library_books</mat-icon> FAT</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/doctype']"><mat-icon>library_add</mat-icon> Document Types</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/loca']"><mat-icon>add_location_alt</mat-icon> Locations</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/entity']"><mat-icon>business</mat-icon> Entities</a></li>
+              <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/mpki/admin/masterdata/color']"><mat-icon>color_lens</mat-icon> Color-Codes</a></li>
+          </ul> -->
+          <ul class="nav nav-pills">
+            <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/admin/admin/masterdata/department']"> Department</a></li>
+            <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/admin/admin/masterdata/subassembly']"> Sub Assembly</a></li>
+            <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/admin/admin/masterdata/parts']"> Parts</a></li>
+            <li routerLinkActive="active"><a mat-raised-button [routerLink]="['/admin/admin/masterdata/delayreason']"> Delay Reason</a></li>
+
+        </ul>
+        </div>
+      </div>
+      <!-- <div class="col-sm-6" style="display: flex;align-items: center;">
+        <div class="w-100 flex-p">
+          <label style="font-size: 16px;font-weight: bold !important;">Search by Keyword:</label>
+          <input style="padding:8px 30px;margin-left:5px;border:none;border-radius: 5px;background: rgb(224, 224, 224);"type="text"/>
+        </div>
+        
+      </div> -->
+      <div class="col-sm-6">
+
+      </div>
+      
+      <div class="col-sm-2" >
+        <div class="w-100 flex-p">
+          <button mat-raised-button class="pull-right btn-primary" (click)="openUserDialog('Add')"><mat-icon>add</mat-icon>&nbsp;Add
+            Parts Data</button>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <div fxLayout="row wrap"> 
+        <div class="table-responsive">
+          <table id="example2" class="table table-bordered table-hover">
+            <thead class="tbl-head">
+              <tr class="tr-grid-header">
+                <th >S. No</th>
+                <th>Parts Data</th>
+                <th class="text-center">Code</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let applicant of tableList">
+                <td >{{applicant.sno}}</td>
+                <td>{{applicant.fat}}</td>
+                <td class="text-center">
+                 {{applicant.code}}
+              </td>
+              <td class="text-center">
+                <a title="Edit Industry" style="margin-right: 10px; cursor: pointer;" (click)="openUserDialog('Edit')">
+                  <i class="fa fa-edit"></i>
+                </a>
+                <a mwlConfirmationPopover
+                [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessage"
+                placement="left"
+                (confirm)="deleteUser()"
+                (cancel)="cancelClicked = true">
+                <i style="cursor: pointer;" title="Delete Industry" class="fa fa-trash red"></i>
+              </a>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+  
+  
+</div>
+</div>

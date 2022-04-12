@@ -1,0 +1,86 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title>
+        Add Project
+    </h1>
+</div>
+<div mat-dialog-content>
+    <form [formGroup]="projectForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Project Code:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" formControlName="projectCode" maxlength="5" class="form-control"
+                    placeholder="Enter Project Code(5 digit)">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Project Name:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" formControlName="projectName" maxlength="25" class="form-control"
+                    placeholder="Enter Project Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Project Type: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" formControlName="projectType" maxlength="15" class="form-control"
+                    placeholder="Enter Project Type">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Client Name:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" formControlName="clientName" maxlength="20" class="form-control"
+                    placeholder="Enter Client Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Client Location:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" formControlName="clientLocation" maxlength="25" class="form-control"
+                    placeholder="Enter Client Location">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Project Manager: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <select class="form-control" formControlName="projectManager" placeholder="Select Project Manager">
+                    <option value="0">Select Project Manager</option>
+                    <option *ngFor="let item of projectManagerList" [value]="item.userId">{{item.userName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Start Date: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input class="form-control" readonly="true" formControlName="startDate" placeholder="MM/DD/YYYY"
+                    class="form-control" id="startDate" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Delivery Date: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input class="form-control" readonly="true" formControlName="deliveryDate" placeholder="MM/DD/YYYY"
+                    class="form-control" id="deliveryDate" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2">
+                <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Status: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <select class="form-control" formControlName="status" placeholder="Select Status">
+                    <option value="0">Select Status</option>
+                    <option value="1">Active</option>
+                    <option value="2">On Hold</option>
+                    <option value="3">Inactive</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-raised-button [disabled]="!projectForm.valid"
+        [ngClass]=" !projectForm.valid ? 'pull-right':'pull-right btn-primary' " (click)="saveUser()">
+        <span>Save</span></button>
+    <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

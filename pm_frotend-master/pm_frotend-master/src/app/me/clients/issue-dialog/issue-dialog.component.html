@@ -1,0 +1,72 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title>
+    Issues
+  </h1>
+</div>
+<div mat-dialog-content>
+  <form *ngIf="userType == 'associate' " class="col-xs-12 form-horizontal">
+    <!-- <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Issue Date:
+      </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input [formControl]="issueDate" readonly="true" class="form-control" placeholder="MM/DD/YYYY"
+          class="form-control" id="db" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1" [min]="today"
+          [max]="today">
+        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+      </div>
+    </div> -->
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Description :
+      </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <textarea [formControl]="description" rows="4" type="text" class="form-control txtarea"
+          placeholder="Enter Description "></textarea>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="userType == 'associate' " class="col-xs-12">
+    <button (click)="saveUser()" [disabled]="!description.value"
+      [ngClass]=" !description.value ? 'pull-right':'pull-right btn-primary' " mat-raised-button>
+      <span>Save</span></button>
+  </div>
+  <div class="col-xs-12" style="margin-top: 10px;">
+    <div id="divQuotesGrid" class="table-responsive">
+      <table matSort id="example2" class="table table-bordered table-hover">
+        <thead class="tbl-head">
+          <tr>
+            <th class="text-center">Issue Date </th>
+            <th>Description </th>
+            <th>Posted By</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date Resolved</th>
+            <th class="text-center">Resolved By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="showEmpty">
+            <td class="text-center" colspan="6">
+              No Data Found
+            </td>
+          </tr>
+          <tr *ngFor="let item of issueList">
+            <td class="text-center">{{item.issueDate | date}}</td>
+            <td>{{item.issueDescription}}</td>
+            <td>{{item.engineer}}</td>
+            <td [ngStyle]="{'color': item.status=='1'? 'red' :item.status=='2'? 'blue' : 'Green'}"
+              style="text-align: center !important;cursor: pointer;" (click)="update(item.issuesId,item.status)">
+              {{item.status=='1'? 'Open' :item.status=='2'? 'On Hold' : 'Resolved'}}
+            </td>
+            <td class="text-center">{{item.resolvedDate ? (item.resolvedDate | date) : '-' }}</td>
+            <td class="text-center">{{item.projectManager ? item.projectManager : '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage" [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

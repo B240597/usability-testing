@@ -1,0 +1,33 @@
+<div fxLayout="row wrap" class="breadcrumb" *ngIf="router.url != '/'"  >
+  <div fxFlex="100">
+    <h2
+      *ngIf="!description[moduleTitle][subTitle]"
+      style="margin-top:10px;margin-bottom:10px;"
+     
+    >
+      {{ moduleTitle || "Dashboard" }}
+    </h2>
+    <h2
+      *ngIf="description[moduleTitle][subTitle]"
+      style="margin-top:10px;margin-bottom:5px;"
+     
+    >
+      {{ subTitle || "Dashboard" }}
+    </h2>
+    <mat-card fxLayout="row" class="breadcrumb helptext bc">
+      <div fxFlex="100" class="flex-p">
+        <span
+          *ngIf="!description[moduleTitle][subTitle]"
+          class="page-title nomargin"  
+        >
+          {{ description[moduleTitle] || description["Dashboard"] }}
+        </span>
+        <span
+          *ngIf="description[moduleTitle][subTitle]"
+          class="page-title nomargin" 
+          >{{ description[moduleTitle][subTitle] }}</span
+        >
+      </div>
+    </mat-card>
+  </div>
+</div>

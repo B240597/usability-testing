@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC,IAAI,CAAC;EAC1B,KAAK,EAAE,gBAAgB;EACvB,WAAW,EAAE,IAAI;CAClB",
+    "sources": [
+        "delay-master.component.scss"
+    ],
+    "names": [],
+    "file": "delay-master.component.css"
+}

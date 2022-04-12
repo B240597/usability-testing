@@ -1,0 +1,28 @@
+<div class="cust">
+  <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>
+    {{data.heading}}</h3>
+  <!-- <span>Add</span> Stage</h3> -->
+</div>
+
+
+<div mat-dialog-content>
+  <div class="form-group">
+    <p align="center" >{{data.action}}</p>
+  </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;">
+  <button *ngIf= "data.from" mat-raised-button style="background: #248f8f !important" class="add-hover btn-success" (click)="convert()">
+    <mat-icon>send</mat-icon>
+    <span>&nbsp;Confirm</span>
+  </button>
+  <button *ngIf= "!data.from" mat-raised-button style="background: #248f8f !important" class="add-hover btn-success" (click)="convert()">
+    <mat-icon>send</mat-icon>
+    <span>&nbsp;Convert</span>
+  </button>
+  <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+    <mat-icon>cancel</mat-icon>
+    <span>&nbsp;Cancel</span>
+  </button>
+
+</mat-dialog-actions>

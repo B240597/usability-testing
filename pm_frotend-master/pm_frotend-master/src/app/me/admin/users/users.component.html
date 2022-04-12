@@ -1,0 +1,194 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button mat-raised-button class="pull-right btn-primary" (click)="openUserDialog(null)">
+                        <mat-icon>person_add</mat-icon> Add
+                        User
+                    </button>
+                    <button mat-raised-button color="primary" class="pull-right filter-hover margin-right-10"
+                        (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" *ngIf="filterToggle">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row col-sm-12">
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    Search by Name:
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" [formControl]="filterUser" onCopy="return false"
+                                        onPaste="return false" class="form-control" placeholder="Search by User Name">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    Select Status:
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by Status--" class="form-control"
+                                        [formControl]="filterStatus">
+                                        <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="col-lg-1" style="margin-left:195px!important;">
+                                <button mat-raised-button class="pull-right btn-primary" (click)="filterSearch()">
+                                    <mat-icon>youtube_searched_for</mat-icon> Search
+                                </button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                <button mat-raised-button style="background-color:#37474f; color:#fff !important"
+                                    (click)="clearFilters()">
+                                    <mat-icon>settings_backup_restore</mat-icon> Clear
+                                </button>
+                            </div>
+                            <a (click)="filterToggle = !filterToggle" class="pull-right"
+                                style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                            </a>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap">
+            <div class="table-responsive">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead class="tbl-head">
+                        <tr class="tr-grid-header">
+                            <th>User Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th class="text-center">Change Password</th>
+                            <th>Role</th>
+                            <th class="text-center">User code</th>
+                            <th class="text-center">Status</th>
+                            <th *ngIf="userType == 'admin' " class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let applicant of Users">
+                            <td>{{applicant.userName}}</td>
+                            <td>
+                                {{applicant.userPhone}}
+                            </td>
+                            <td *ngIf="applicant.userEmail">{{applicant.userEmail}}
+                                <i *ngIf="applicant.verificationStatus" title="User verified" class="fa fa-check Green"
+                                    aria-hidden="true"></i>
+                                <i *ngIf="!applicant.verificationStatus" title="User not verified"
+                                    class="fa fa-times Red" aria-hidden="true"></i>
+                            </td>
+                            <td class="text-center" *ngIf="!applicant.userEmail">-
+                            </td>
+                            <td class="text-center">
+                                <button mat-raised-button class=" btn-primary"
+                                    (click)="changePasswordDialog(applicant)">
+                                    <mat-icon>vpn_key</mat-icon> Password
+                                </button>
+                            </td>
+                            <td>{{applicant.userType == 1 ? 'Admin' : (applicant.userType == 2 ? 'Project Manager' :
+                                'Engineer')}}</td>
+                            <td class="text-center">{{applicant.userCode}}</td>
+                            <td class="text-center">
+                                <a *ngIf="userType == 'admin' && userId != applicant.userId " mwlConfirmationPopover
+                                    [popoverTitle]="popoverStatusTitle" [popoverMessage]="popoverStatusMessage"
+                                    placement="left" (confirm)="updateUserStatus(applicant.userId,!applicant.status)"
+                                    (cancel)="cancelClicked = true" [appendToBody]="true">
+                                    <span *ngIf="!applicant.status" style="color:red;cursor: pointer;">Inactive</span>
+                                    <span *ngIf="applicant.status" style="color:#0987e8d1;cursor: pointer">Active</span>
+                                </a>
+                                <a *ngIf="userType != 'admin' || userId == applicant.userId  ">
+                                    <span *ngIf="!applicant.status" style="color: black;">Inactive</span>
+                                    <span *ngIf="applicant.status" style="color: black;">Active</span>
+                                </a>
+                            </td>
+                            <td class="text-center" *ngIf="userType == 'admin' ">
+                                <a matTooltip="Update User"
+                                    style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1"
+                                    (click)="openUserDialog(applicant)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="totalSize" (page)="handlePage($event)" [pageIndex]="currentPage"
+                    [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons>
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!Users" fxLayout="column" fxLayoutAlign="center center" class="campaign-spinner">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
+
+
+
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index:5000 !important;opacity:1"
+    aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name2" class="modal-title pull-left">Add Information</h4>
+                <button type="button" class="close pull-right" aria-label="Close" onClick="closeModal('modal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea rows="4" class="form-control txtarea" id="content"
+                                placeholder="Enter your comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <mat-radio-group>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-radio-button value="1">Email</mat-radio-button>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-radio-button value="2">Call</mat-radio-button>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-radio-button value="1">Text</mat-radio-button>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-radio-button value="2">Linkedin</mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button class="add-hover" style="background:#229494;color: white;"
+                    onClick="saveModal('mod1')">Save</button>
+                <button mat-raised-button class="add-dark-hover" style="background:transparent;"
+                    onClick="closeModal('modal')">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
