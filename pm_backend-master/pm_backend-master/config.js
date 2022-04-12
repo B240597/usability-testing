@@ -34,29 +34,5 @@ module.exports = {
         logger: logger,
         logging: true
     },
-    'devDB': {
-        connectionLimit: 100,
-        host: 'database-2.c0et0tzvd6l3.us-east-1.rds.amazonaws.com',
-        port: 3306,
-        user: 'admin',
-        password: 'Option1234',
-        database: 'optima_heat_dev',
-        dialect: 'mysql',
-        logger: logger,
-        logging: false
-    },
-    'liveDB': {
-        connectionLimit: 100,
-        host: 'database-2.c0et0tzvd6l3.us-east-1.rds.amazonaws.com',
-        port: 3306,
-        user: 'admin',
-        password: 'Option1234',
-        database: 'optima_heat_live',
-        dialect: 'mysql',
-        logger: logger,
-        logging: false
-    },
     'localport': 6500,
-    'devport': 6501,
-    'liveport': 6503,
 }
